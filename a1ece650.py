@@ -95,7 +95,7 @@ def main():
             streetname = str.lower(re.search(r'(?<=\")(.*)(?=\")', str(line)).group())
             if (str(line).strip())[0] == 'a':
                 if streetname in street:
-                    sys.stderr(
+                    sys.stderr.write(
                         "Error: Street already in the graph; if you need to change the street, please use 'c' command\n")
                     sys.stderr.flush()
                 else:
