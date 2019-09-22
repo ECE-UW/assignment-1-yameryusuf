@@ -93,7 +93,8 @@ def main():
         graphtest = re.match(r'[^\S]*[g][^\S]*$', str(line))
         removetest = re.match(r'[^\S]*[r]\s[^\S]*"(.*?)"[^\S]*$', str(line))
         cmdtest = re.match(r'[^\S]*[ac]\s[^\S]*"(.*?)"\s[^\S]*', str(line))
-        tupletest = re.sub(r'\(([^\S]*.\d*?[^\S]*,.[^\S]*\d*?[^\S]*)\)|\s|\(([^\S]*.\d*?[^\S]*,.[^\S]*\d*?[^\S]*)\)', '', str(line))
+        tupletest = re.sub(r'\(([^\S]*.-?\d*?[^\S]*,.[^\S]*-?\d*?[^\S]*)\)|\s|\(([^\S]*-?.\d*?[^\S]*,.[^\S]*-?\d*?['
+                           r'^\S]*)\)', '', str(line))
         if cmdtest is not None and tupletest == re.sub(r'\s', '', cmdtest.group()):
             streetname = str.lower(re.search(r'(?<=\")(.*)(?=\")', str(line)).group())
             if (str(line).strip())[0] == 'a':
