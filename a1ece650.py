@@ -22,18 +22,14 @@ class Segments(object):
         self.flags = True
 
 def intersectionpoint(p1, q1, p2, q2):
-    p1 = n.array(p1)
-    q1 = n.array(q1)
-    p2 = n.array(p2)
-    q2 = n.array(q2)
     r = q1 - p1
     s = q2 - p2
     if n.cross(r, s) == 0:
         if n.cross((p1 - p2), s) == 0:  # colinear case
-            tzero = n.dot((p2 - p1), r) / n.dot(r, r)
-            tone = n.dot((q2 - p1), r) / n.dot(r, r)
-            uzero = n.dot((p1 - p2), s) / n.dot(s, s)
-            uone = n.dot((q1 - p2), s) / n.dot(s, s)
+            tzero = n.dot((p2 - p1), r) / float(n.dot(r, r))
+            tone = n.dot((q2 - p1), r) / float(n.dot(r, r))
+            uzero = n.dot((p1 - p2), s) / float(n.dot(s, s))
+            uone = n.dot((q1 - p2), s) / float(n.dot(s, s))
             if 1 >= tzero >= 0 and 1 >= tone >= 0: return [tuple(p2), tuple(q2)]
             if 1 >= uzero >= 0 and 1 >= uone >= 0: return [tuple(p1), tuple(q1)]
             if 1 >= tzero >= 0 and 1 >= uone >= 0: return [tuple(p2), tuple(q1)]
@@ -41,8 +37,8 @@ def intersectionpoint(p1, q1, p2, q2):
         elif n.cross((p1 - p2), s) != 0:  # Parallel Line Case
             return None
     elif n.cross(r, s) != 0:
-        t = n.cross((p2 - p1), s) / n.cross(r, s)
-        u = n.cross((p2 - p1), r) / n.cross(r, s)
+        t = n.cross((p2 - p1), s) / float(n.cross(r, s))
+        u = n.cross((p2 - p1), r) / float(n.cross(r, s))
         if 1 >= t >= 0 and 1 >= u >= 0:
             p = p1 + t * r
             return [tuple(p)]
