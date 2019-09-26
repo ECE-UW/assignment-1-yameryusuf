@@ -129,7 +129,7 @@ def main():
                 sys.stderr.flush()
         elif graphtest is not None:
             (V, E) = GenerateGraph(street)
-            sys.stdout.write("Vertex: {\n")
+            sys.stdout.write("Vertex = {\n")
             for i in V: sys.stdout.write("%1d: (%.2f,%.2f)\n" % (i[0], i[1][0], i[1][1]))
             sys.stdout.write("}\n")
             sys.stdout.write("Edges = {\n")
