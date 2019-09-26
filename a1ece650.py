@@ -87,8 +87,8 @@ def main():
         if line == '':
             break
         graphtest = re.match(r'[^\S]*[g][^\S]*$', str(line))
-        removetest = re.match(r'[^\S]*[r]\s[^\S]*"(.*?)"[^\S]*$', str(line))
-        cmdtest = re.match(r'[^\S]*[ac]\s[^\S]*"(.*?)"\s[^\S]*', str(line))
+        removetest = re.match(r'[^\S]*[r]\s[^\S]*"(.*[A-Za-z\s])"[^\S]*$', str(line))
+        cmdtest = re.match(r'[^\S]*[ac]\s[^\S]*"(.*[A-Za-z\s])"\s[^\S]*', str(line))
         tupletest = re.sub(r'\(([^\S]*.-?\d*?[^\S]*,.[^\S]*-?\d*?[^\S]*)\)|\s|\(([^\S]*-?.\d*?[^\S]*,.[^\S]*-?\d*?['
                            r'^\S]*)\)', '', str(line))
         if cmdtest is not None and tupletest == re.sub(r'\s', '', cmdtest.group()):
