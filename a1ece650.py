@@ -30,10 +30,10 @@ def intersectionpoint(p1, q1, p2, q2):
             tone = n.dot((q2 - p1), r) / float(n.dot(r, r))
             uzero = n.dot((p1 - p2), s) / float(n.dot(s, s))
             uone = n.dot((q1 - p2), s) / float(n.dot(s, s))
-            if 1 >= tzero >= 0 and 1 >= tone >= 0: return [tuple(p2), tuple(q2)]
-            if 1 >= uzero >= 0 and 1 >= uone >= 0: return [tuple(p1), tuple(q1)]
-            if 1 >= tzero >= 0 and 1 >= uone >= 0: return [tuple(p2), tuple(q1)]
-            if 1 >= tone >= 0 and 1 >= uzero >= 0: return [tuple(p1), tuple(q2)]
+            if 1 > tzero > 0 and 1 > tone > 0: return [tuple(p2), tuple(q2)]
+            if 1 > uzero > 0 and 1 > uone > 0: return [tuple(p1), tuple(q1)]
+            if (1 > tzero > 0 and 1 > uone > 0) or (tzero == 1 and uone == 0): return [tuple(p2), tuple(q1)]
+            if (1 > tone > 0 and 1 > uzero > 0) or (tone == 0 and uzero == 1): return [tuple(p1), tuple(q2)]
         elif n.cross((p1 - p2), s) != 0:  # Parallel Line Case
             return None
     elif n.cross(r, s) != 0:
@@ -65,10 +65,10 @@ def GenerateGraph(street):
             k.ip.sort()
             for l in k.ip:
                 if l not in listofvertex and k.flags: listofvertex.append(l)
-            for l in range(len(k.ip)-1):
-                if k.flags and (listofvertex.index(k.ip[l]),listofvertex.index(k.ip[l+1])) not in listofedges:
+            for l in range(len(k.ip) - 1):
+                if k.flags and (listofvertex.index(k.ip[l]), listofvertex.index(k.ip[l + 1])) not in listofedges:
                     listofedges.append(
-                    (listofvertex.index(k.ip[l]), listofvertex.index(k.ip[l+1])))
+                        (listofvertex.index(k.ip[l]), listofvertex.index(k.ip[l + 1])))
     return [list((i, listofvertex[i])) for i in range(len(listofvertex))], listofedges
 
 
@@ -129,20 +129,21 @@ def main():
                 sys.stderr.flush()
         elif graphtest is not None:
             (V, E) = GenerateGraph(street)
-            sys.stdout.write("Vertex = {\n")
-            for i in V: sys.stdout.write("%1d:  (%.2f,%.2f)\n" % (i[0], i[1][0], i[1][1]))
+            sys.stdout.write("V = {\n")
+            for i in V: sys.stdout.write("  %1d:  (%.2f,%.2f)\n" % (i[0], i[1][0], i[1][1]))
             sys.stdout.write("}\n")
-            sys.stdout.write("Edges = {\n")
-            for i in E: sys.stdout.write("<%1d,%1d>,\n" % (i[0], i[1]))
+            sys.stdout.write("E = {\n")
+            for i in range(0,len(E)-1): sys.stdout.write("  <%1d,%1d>,\n" % (E[i][0], E[i][1]))
+            if len(E) > 0: sys.stdout.write("  <%1d,%1d>\n" % (E[len(E)-1][0], E[len(E)-1][1]))
             sys.stdout.write("}\n")
         else:
             sys.stderr.write(
                 "Error: formatting of the command or coordinates do not match what is expected: e.g a ""Weber Street"" (2,1) "
                 "(3,3)\n")
             sys.stderr.flush()
-        #print('read a line:', line)
+        # print('read a line:', line)
 
-    #print('Finished reading input')
+    # print('Finished reading input')
 
     # return exit code 0 on successful termination
 
